@@ -13,6 +13,13 @@ object BooksAnalyzer extends App {
 
   var parallelize = sc.parallelize("Hello World".toList)
 
+  val bookReviews = spark.read.csv("./src/main/resources/reviews.csv")
+
+  println {
+    bookReviews.collect.filter(x => x(0).toString.indexOf("(Harry Potter, #") >= 0).distinct.foreach(x => println(x(0) + "\t" + x(3)))
+  }
+
+
   parallelize.collect.foreach(print)
 
 }
