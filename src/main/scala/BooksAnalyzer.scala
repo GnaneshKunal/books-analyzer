@@ -22,4 +22,6 @@ object BooksAnalyzer extends App {
 
   parallelize.collect.foreach(print)
 
+  spark.stop()
+
 }
