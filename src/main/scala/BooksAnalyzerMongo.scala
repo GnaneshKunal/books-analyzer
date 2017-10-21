@@ -28,5 +28,11 @@ object BooksAnalyzerMongo extends App {
 
   top10Authors.foreach(println)
 
+  val harryPotterBooks = rdd.filter(_.get("title").toString.contains("Harry Potter"))
+
+  println {
+    "Harry Potter Books Count: " + harryPotterBooks.count()
+  }
+
   spark.stop()
 }
