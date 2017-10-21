@@ -29,10 +29,6 @@ object BooksAnalyzerMongo extends App {
     rdd.count
   }
 
-//  val documents = sc.parallelize((1 to 10).map(i => Document.parse(s"{spark: $i")))
-
-//  documents.collect.foreach(println)
-
   spark.stop()
 
 
