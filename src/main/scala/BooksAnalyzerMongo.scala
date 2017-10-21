@@ -18,18 +18,15 @@ object BooksAnalyzerMongo extends App {
 
   val sc = spark.sparkContext
 
-  val rdd = MongoSpark.load(sc)
+  val rdd = MongoSpark.load(sc).persist()
 
-  val filteredRdd = rdd.filter(_.getInteger("bookID") < 10)
-  println {
-    filteredRdd.first.toJson
-  }
+  val top10Authors =
+    rdd.map(x => (x.getString("author"), 1))
+    .reduceByKey(_ + _)
+    .sortBy(_._2, ascending = false)
+    .take(10)
 
-  println {
-    rdd.count
-  }
+  top10Authors.foreach(println)
 
   spark.stop()
-
-
 }
