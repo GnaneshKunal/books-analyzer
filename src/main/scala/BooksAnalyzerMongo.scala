@@ -34,5 +34,16 @@ object BooksAnalyzerMongo extends App {
     "Harry Potter Books Count: " + harryPotterBooks.count()
   }
 
+  val booksWithMostEditions =
+    rdd.map(x => (x.get("title"), 1))
+      .reduceByKey(_ + _)
+      .sortBy(_._2, ascending = false)
+
+  booksWithMostEditions.take(5).foreach(println)
+
+  val booksWithFiveStarReviewerRatings = rdd.filter(_.get("reviewerRatings") == 5)
+
+  booksWithFiveStarReviewerRatings.take(5).foreach(x => println(x.get("title")))
+
   spark.stop()
 }
