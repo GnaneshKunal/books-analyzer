@@ -45,5 +45,27 @@ object BooksAnalyzerMongo extends App {
 
   booksWithFiveStarReviewerRatings.take(5).foreach(x => println(x.get("title")))
 
+  println("Books with 1 Star Reviewer Ratings")
+
+  val booksWith1StarRatings = rdd
+    .filter(_.get("reviewerRatings") == 1)
+
+  booksWith1StarRatings
+    .take(5) foreach(x => println {
+    x.get("title")
+  })
+
+  println {
+    "Books with 0 Star ReviewerRatings"
+  }
+
+  val booksWith0StarRatings = rdd
+    .filter(_.get("reviewerRatings") == 0)
+
+  booksWith0StarRatings
+    .take(5) foreach(x => println {
+    x.get("title")
+  })
+
   spark.stop()
 }
