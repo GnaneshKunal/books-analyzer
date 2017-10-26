@@ -120,5 +120,17 @@ object BooksAnalyzerMongo extends App {
       x.get("title")
     })
 
+  print {
+    "AVERAGE REVIEW: "
+  }
+
+  val averageReview2 = booksWithNoRatings
+    .map(x => (1, x.get("reviewerRatings").toString.toInt))
+    .reduceByKey(_ + _).first._2.toDouble / booksWithNoRatings.count()
+
+  println {
+    averageReview2
+  }
+
   spark.stop()
 }
