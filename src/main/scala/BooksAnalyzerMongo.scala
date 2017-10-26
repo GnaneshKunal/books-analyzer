@@ -107,5 +107,18 @@ object BooksAnalyzerMongo extends App {
   booksWithBiggestReview.distinct.sortBy(_._2, ascending = false)
     .take(10).foreach(println)
 
+
+  println {
+    "BOOKS WITH NO RATINGS"
+  }
+
+  val booksWithNoRatings = rdd
+    .filter(_.get("reviewerRatings") != "")
+
+  booksWithNoRatings.distinct.take(5)
+    .foreach(x => println {
+      x.get("title")
+    })
+
   spark.stop()
 }
