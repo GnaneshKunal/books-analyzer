@@ -67,5 +67,16 @@ object BooksAnalyzerMongo extends App {
     x.get("title")
   })
 
+  println {
+    "titles starting with 'A'"
+  }
+
+  val booksStartsWithA = rdd
+    .filter(_.get("title").toString.charAt(0) == 'A')
+
+  booksStartsWithA take 5 foreach(x => println {
+    x.getString("title")
+  })
+
   spark.stop()
 }
