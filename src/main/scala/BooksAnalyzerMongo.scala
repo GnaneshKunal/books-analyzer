@@ -20,6 +20,10 @@ object BooksAnalyzerMongo extends App {
 
   val rdd = MongoSpark.load(sc).persist()
 
+  println {
+    "TOP 10 AUTHORS"
+  }
+
   val top10Authors =
     rdd.map(x => (x.getString("author"), 1))
     .reduceByKey(_ + _)
@@ -31,7 +35,11 @@ object BooksAnalyzerMongo extends App {
   val harryPotterBooks = rdd.filter(_.get("title").toString.contains("Harry Potter"))
 
   println {
-    "Harry Potter Books Count: " + harryPotterBooks.count()
+    "HARRY POTTER BOOKS COUNT: " + harryPotterBooks.count()
+  }
+
+  println {
+    "BOOKS WITH MOST EDITIONS"
   }
 
   val booksWithMostEditions =
@@ -41,11 +49,17 @@ object BooksAnalyzerMongo extends App {
 
   booksWithMostEditions.take(5).foreach(println)
 
+  println {
+    "BOOKS WITH 5 STAR REVIEWER RATINGS"
+  }
+
   val booksWithFiveStarReviewerRatings = rdd.filter(_.get("reviewerRatings") == 5)
 
   booksWithFiveStarReviewerRatings.take(5).foreach(x => println(x.get("title")))
 
-  println("Books with 1 Star Reviewer Ratings")
+  println{
+    "BOOKS WITH 1 STAR REVIEWER RATINGS"
+  }
 
   val booksWith1StarRatings = rdd
     .filter(_.get("reviewerRatings") == 1)
@@ -68,7 +82,7 @@ object BooksAnalyzerMongo extends App {
   })
 
   println {
-    "titles starting with 'A'"
+    "TITLES STARTING WITH 'A'"
   }
 
   val booksStartsWithA = rdd
@@ -79,7 +93,7 @@ object BooksAnalyzerMongo extends App {
   })
 
   println {
-    "Books with biggest Review"
+    "BOOKS WITH BIGGEST REVIEW"
   }
 
   val booksWithBiggestReview = rdd
