@@ -78,5 +78,20 @@ object BooksAnalyzerMongo extends App {
     x.getString("title")
   })
 
+  println {
+    "Books with biggest Review"
+  }
+
+  val booksWithBiggestReview = rdd
+    .map(x => (
+      x.get("title"),
+      x.get("review")
+        .toString
+        .split("\\W+").length
+    ))
+
+  booksWithBiggestReview.distinct.sortBy(_._2, ascending = false)
+    .take(10).foreach(println)
+
   spark.stop()
 }
