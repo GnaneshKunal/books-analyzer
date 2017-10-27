@@ -89,7 +89,7 @@ object BooksAnalyzerMongo extends App {
   val booksStartsWithA = rdd
     .filter(_.get("title").toString.charAt(0) == 'A') //filter rdd to get rows where book title start with a
 
-  booksStartsWithA take 5 foreach(x => println { 
+  booksStartsWithA take 5 foreach(x => println { //print first 5 books whose name start with "A"
     x.getString("title")
   })
 
@@ -97,7 +97,7 @@ object BooksAnalyzerMongo extends App {
     "BOOKS WITH BIGGEST REVIEW"
   }
 
-  val booksWithBiggestReview = rdd
+  val booksWithBiggestReview = rdd 
     .map(x => (
       x.get("title"),
       x.get("review")
@@ -132,6 +132,18 @@ object BooksAnalyzerMongo extends App {
   println {
     averageReview2
   }
+
+  println {
+    "BOOKS WITH LARGEST TITLE"
+  }
+
+  val booksWithLargestTitle = rdd
+    .map(x => (
+      x.get("title"),
+      x.get("title")
+        .toString.length
+    ))
+    .sortBy(_._2, ascending = false)
 
   spark.stop()
 }
