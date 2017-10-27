@@ -110,15 +110,15 @@ object BooksAnalyzerMongo extends App {
     })
 
   print {
-    "AVERAGE REVIEW: "
+    "AVERAGE RATINGS: "
   }
 
-  val averageReview2 = booksWithNoRatings
+  val averageRatings = booksWithNoRatings
     .map(x => (1, x.get("reviewerRatings").toString.toInt))
     .reduceByKey(_ + _).first._2.toDouble / booksWithNoRatings.count()
 
   println {
-    averageReview2
+    averageRatings
   }
 
   println {
