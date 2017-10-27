@@ -71,18 +71,6 @@ object BooksAnalyzerMongo extends App {
   })
 
   println {
-    "Books with 0 Star ReviewerRatings"
-  }
-
-  val booksWith0StarRatings = rdd
-    .filter(_.get("reviewerRatings") == 0) //filter rdd to get rows where reviewer ratings is 0
-
-  booksWith0StarRatings
-    .take(5) foreach(x => println { //print first 5 book titles with 0 star rating
-    x.get("title")
-  })
-
-  println {
     "TITLES STARTING WITH 'A'"
   }
 
